@@ -3,6 +3,7 @@
 .DEF TEMP = r16
 .DEF LIGHT = r17
 .DEF NUMBER = r18
+.DEF CURRENT_INDICATOR = r19
 
 .ORG 0
     rjmp RESET
@@ -20,43 +21,54 @@ RESET:
     out SPL, TEMP
 
 	rcall INITSYS
+	rjmp main
 	
-	ldi NUMBER, 6
-
-    ; Настройка Timer1 на 1 секунду
-    ; Предположим F_CPU = 1 МГц → нужен делитель 1024
-    ; 1_000_000 / 1024 = 976.5625 тиков в секунду → OCR1A = 976
-
-    ;ldi TEMP, (1 << WGM12)         ; CTC режим (Clear Timer on Compare Match)
-    ;out TCCR1B, TEMP
-
-    ;ldi TEMP, 0x0F	                ; Выставляем OCR1A = 976 (low byte)
-    ;out OCR1AL, TEMP
-    ;ldi TEMP, 0x00               ; 976 = 0x03D0 (high byte = 0x03)
-    ;out OCR1AH, TEMP
-
-    ; Установка делителя 1024: CS12=1, CS10=1
-    ;ldi TEMP, (1 << CS12) | (1 << CS10)
-    ;out TCCR1B, TEMP
-	
+main:	
 	rcall Out_Light
+	rcall wait
+	
+	lsl CURRENT_INDICATOR
+	ldi TEMP, 0XF
+	and CURRENT_INDICATOR, TEMP
+	
+	ldi TEMP, 0
+	cp CURRENT_INDICATOR, TEMP
+	breq Init_indicator
+	
+	ldi TEMP, 1
+	add NUMBER, TEMP
+	ldi TEMP, 5
+	cp NUMBER, TEMP
+	breq Init_number
+
+	rjmp main
+	
+Init_indicator:
+	ldi CURRENT_INDICATOR, 1
+	
+Init_number:
+	ldi NUMBER, 0
 	
 Out_Light:
-	ldi TEMP, 1
-	out PORTD, TEMP
-	ldi NUMBER, 1
+	out PORTD, CURRENT_INDICATOR
+	mov TEMP, ZL
 	add ZL, NUMBER
 	lpm LIGHT, Z
-    mov TEMP, LIGHT
-    out PORTB, TEMP
+	mov ZL, TEMP
+    out PORTB, LIGHT
 
-	ldi TEMP, 2
-	out PORTD, TEMP
-	ldi NUMBER, 1
-	add ZL, NUMBER
-	lpm LIGHT, Z
-    mov TEMP, LIGHT
-    out PORTB, TEMP
+wait:
+    ldi r20, 100
+w1:
+    ldi r21, 255
+w2:
+    nop
+    dec r21
+    brne w2
+    dec r20
+    brne w1
+    ret
+
 	
 INITSYS:
 	ldi TEMP, 0xFF
@@ -67,5 +79,9 @@ INITSYS:
 
 	ldi ZH, high(seg7_codes << 1)  ; Загружаем адрес таблицы (умножаем на 2, т.к. PC 16-битный)
     ldi ZL, low(seg7_codes << 1)
+
+	ldi NUMBER, 0
+	ldi LIGHT, 0
+	ldi CURRENT_INDICATOR, 1
 	ret
 	
