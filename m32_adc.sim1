@@ -2,7 +2,7 @@
 
 <item itemtype="MCU" CircId="mega32-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-208,-180" rotation="0" hflip="1" vflip="1" label="mega32-6" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="m32_adc.hex" Auto_Load="false" saveEepr="true" Logic_Symbol="false" Wdt_enabled="false" MainMcu="true" SerialMon="-1" />
 
-<item itemtype="Seven Segment" CircId="Seven Segment-18" mainComp="false" Show_id="false" Show_Val="false" Pos="-508,-136" rotation="360" hflip="1" vflip="1" label="Seven Segment-18" idLabPos="20,-44" labelrot="0" valLabPos="-16,20" valLabRot="0" Color="Yellow" NumDisplays="4" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="1 mA" Resistance="1 Ω" />
+<item itemtype="Seven Segment" CircId="Seven Segment-18" mainComp="false" Show_id="false" Show_Val="false" Pos="-508,-136" rotation="360" hflip="1" vflip="1" label="Seven Segment-18" idLabPos="20,-44" labelrot="0" valLabPos="-16,20" valLabRot="0" Color="Yellow" NumDisplays="4" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="200 µA" Resistance="1 Ω" />
 
 <item itemtype="Push" CircId="Push-21" mainComp="false" Show_id="false" Show_Val="false" Pos="-80,-84" rotation="90" hflip="1" vflip="1" label="Push-21" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Norm_Close="false" Poles="1" />
 
@@ -44,6 +44,10 @@
 
 <item itemtype="Ground" CircId="Ground-100" mainComp="false" Show_id="false" Show_Val="false" Pos="-252,188" rotation="0" hflip="1" vflip="1" label="Ground-100" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
 
+<item itemtype="Rail" CircId="Rail-113" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-132,-156" rotation="90" hflip="1" vflip="1" label="Rail-113" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
+
+<item itemtype="WaveGen" CircId="WaveGen-115" mainComp="false" Show_id="false" Show_Val="false" Pos="-156,-284" rotation="0" hflip="1" vflip="1" label="WaveGen-115" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Running="false" Wave_Type="Sine" Freq="1 kHz" Phase="0 _º" Steps="100 _Steps" Duty="50 _%" Always_On="false" Bipolar="false" Floating="false" Semi_Ampli="2.5 V" Mid_Volt="20 V" />
+
 <item itemtype="Node" CircId="Node-25" mainComp="false" Pos="-80,-120" />
 
 <item itemtype="Node" CircId="Node-107" mainComp="false" Pos="-420,172" />
@@ -51,6 +55,8 @@
 <item itemtype="Node" CircId="Node-105" mainComp="false" Pos="-480,172" />
 
 <item itemtype="Node" CircId="Node-109" mainComp="false" Pos="-352,172" />
+
+<item itemtype="Node" CircId="Node-114" mainComp="false" Pos="-132,-108" />
 
 <item itemtype="Connector" uid="Connector-55" startpinid="Push-21-switch0pinN" endpinid="Ground-22-Gnd" pointList="-80,-68,-80,-36" />
 
@@ -127,5 +133,13 @@
 <item itemtype="Connector" uid="Connector-310" startpinid="Node-107-2" endpinid="Node-109-0" pointList="-420,172,-352,172" />
 
 <item itemtype="Connector" uid="Connector-309" startpinid="BJT-99-emiter" endpinid="Node-109-1" pointList="-352,84,-352,172" />
+
+<item itemtype="Connector" uid="Connector-316" startpinid="mega32-6-PORTV0" endpinid="Node-114-1" pointList="-152,-92,-132,-92,-132,-108" />
+
+<item itemtype="Connector" uid="Connector-317" startpinid="Rail-113-outnod" endpinid="Node-114-0" pointList="-132,-140,-132,-108" />
+
+<item itemtype="Connector" uid="Connector-318" startpinid="Node-114-2" endpinid="mega32-6-PORTV1" pointList="-132,-108,-152,-108" />
+
+<item itemtype="Connector" uid="Connector-319" startpinid="WaveGen-115-outnod" endpinid="mega32-6-PORTA0" pointList="-140,-284,-140,-172,-152,-172" />
 
 </circuit>
