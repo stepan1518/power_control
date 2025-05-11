@@ -46,7 +46,7 @@
 
 <item itemtype="Rail" CircId="Rail-113" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-132,-156" rotation="90" hflip="1" vflip="1" label="Rail-113" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
 
-<item itemtype="WaveGen" CircId="WaveGen-120" mainComp="false" Show_id="false" Show_Val="false" Pos="-156,-284" rotation="0" hflip="1" vflip="1" label="WaveGen-120" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Running="false" Wave_Type="Sine" Freq="50 Hz" Phase="0 _º" Steps="100 _Steps" Duty="50 _%" Always_On="false" Bipolar="false" Floating="false" Semi_Ampli="1 V" Mid_Volt="0 V" />
+<item itemtype="WaveGen" CircId="WaveGen-120" mainComp="false" Show_id="false" Show_Val="false" Pos="-156,-284" rotation="0" hflip="1" vflip="1" label="WaveGen-120" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Running="false" Wave_Type="Sine" Freq="50 Hz" Phase="0 _º" Steps="100 _Steps" Duty="50 _%" Always_On="false" Bipolar="false" Floating="false" Semi_Ampli="5 V" Mid_Volt="0 V" />
 
 <item itemtype="Node" CircId="Node-25" mainComp="false" Pos="-80,-120" />
 

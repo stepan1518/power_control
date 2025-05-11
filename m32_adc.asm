@@ -135,6 +135,35 @@ SysDoLoop_S2:
 	in PARAM_0, ADCL
 	in PARAM_1, ADCH
 	
+	;Пока так надо баг убрать
+	ldi PARAM_0, 255
+	ldi PARAM_1, 3
+	ldi PARAM_3, 15
+	rcall multiply_16x8
+	
+	ldi PARAM_3, 255
+	ldi PARAM_4, 3
+	rcall Divide16x16
+	
+	;Деление не работает нормально - разобраться
+	;inc PARAM_0
+	;Теперь в PARAM_0 текущее I амплитудное
+	
+	;sqrt(2) = 0.707; * 10 = 7
+	ldi PARAM_3, 7
+	rcall multiply_16x8
+	;В PARAM_0 I действующее
+	
+	;U = 220В
+	ldi PARAM_3, 220
+	rcall multiply_16x8
+	;в PARAM_1;PARAM_0 теперь мощность
+	
+	;Отбрасываем вещественную часть
+	ldi PARAM_3, 10
+	ldi PARAM_4, 0
+	rcall Divide16x16
+	
 	cp POWER_1, PARAM_1	
 	in TEMP, SREG
 	
@@ -201,3 +230,61 @@ INITSYS:
 	ldi CURRENT_INDICATOR, 1
 	ret
 	
+multiply_16x8:
+    ; умножаем младший байт
+    mul PARAM_0, PARAM_3           ; результат в r1:r0
+    mov PARAM_0, r0            ; младший байт результата
+    mov TEMP, r1            ; старший байт пока промежуточный
+
+    ; умножаем старший байт
+    mul PARAM_1, PARAM_3           ; результат в r1:r0
+    add TEMP, r0            ; прибавляем к старшему байту результата
+    ; старший байт результата может выйти за пределы 16 бит, но игнорируем
+
+    ; сохраняем 16-битный результат
+    mov PARAM_1, TEMP       ; старший байт
+
+    clr r1                 ; обнуляем r1 после mul
+
+    ret
+
+Divide16x16:
+	push r17
+	push r18
+	push r19
+Divide_Loop:
+	cp PARAM_1, PARAM_4
+	in TEMP, SREG
+	
+	mov r17, TEMP
+	andi r17, 1
+	
+	lsr TEMP
+	mov r18, TEMP
+	andi r18, 1
+	cp PARAM_0, PARAM_3
+	in TEMP, SREG
+	and r18, TEMP
+	
+	or r17, r18
+	
+	sbrs r17, 0
+	inc r19
+	sbrs r17, 0
+	rcall Subtract16x16
+	sbrs r17, 0
+	rjmp Divide_Loop
+	
+	mov PARAM_0, r19
+	
+	pop r19
+	pop r18
+	pop r17
+	ret
+	
+
+Subtract16x16:
+    sub PARAM_0, PARAM_3
+    sbc PARAM_1, PARAM_4
+
+    ret	
