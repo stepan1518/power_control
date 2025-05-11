@@ -30,15 +30,7 @@ RESET:
 	rjmp main
 	
 main:
-	;ADC!!!
-	ldi TEMP, 199
-	out ADCSRA, TEMP
-SysDoLoop_S2:
-	sbic	ADCSRA,ADSC
-	rjmp	SysDoLoop_S2
-
-	in POWER_0, ADCL
-	in POWER_1, ADCH
+	rcall Update_Power
 
 	mov PARAM_0, POWER_0
 	mov PARAM_1, POWER_1
@@ -67,7 +59,6 @@ Out_Number_On_Board_Loop:
 	sbrs TEMP, 0
 	
 	rjmp Out_Number_On_Board_Loop
-End_Loop:
 	ret
 	
 ;args NUMBER, CURRENT_INDICATOR
@@ -130,6 +121,44 @@ mod10_done:
 	pop r18
     ret
 
+Update_Power:
+	push r17
+	push r18
+
+	;ADC!!!
+	ldi TEMP, 199
+	out ADCSRA, TEMP
+SysDoLoop_S2:
+	sbic	ADCSRA,ADSC
+	rjmp	SysDoLoop_S2
+
+	in PARAM_0, ADCL
+	in PARAM_1, ADCH
+	
+	cp POWER_1, PARAM_1	
+	in TEMP, SREG
+	
+	mov r17, TEMP
+	andi r17, 1
+	
+	lsr TEMP
+	mov r18, TEMP
+	cp POWER_0, PARAM_0
+	in TEMP, SREG
+	and r18, TEMP
+	
+	or r17, r18
+	sbrc r17, 0
+	rcall Set_New_Power_Value
+	
+	pop r18
+	pop r17
+	ret
+Set_New_Power_Value:
+	mov POWER_1, PARAM_1
+	mov POWER_0, PARAM_0
+	ret
+
 wait:
 	push r20
 	push r21
@@ -165,8 +194,8 @@ INITSYS:
 	ldi ZH, high(seg7_codes << 1)  ; Загружаем адрес таблицы (умножаем на 2, т.к. PC 16-битный)
     ldi ZL, low(seg7_codes << 1)
 
-	ldi POWER_0, 0b11111100
-	ldi POWER_1, 12
+	ldi POWER_0, 0
+	ldi POWER_1, 0
 	ldi NUMBER, 0
 	ldi LIGHT, 0
 	ldi CURRENT_INDICATOR, 1

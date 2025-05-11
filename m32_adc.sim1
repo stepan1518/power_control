@@ -46,7 +46,7 @@
 
 <item itemtype="Rail" CircId="Rail-113" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-132,-156" rotation="90" hflip="1" vflip="1" label="Rail-113" idLabPos="-5,-10" labelrot="-90" valLabPos="-12,6" valLabRot="-90" Voltage="5 V" />
 
-<item itemtype="Voltage Source" CircId="Voltage Source-119" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-152,-280" rotation="0" hflip="1" vflip="1" label="Voltage Source-119" idLabPos="-32,-48" labelrot="0" valLabPos="-8,30" valLabRot="0" Running="true" Value_Volt="2.33 V" MaxValue="5 V" MinValue="0 V" />
+<item itemtype="WaveGen" CircId="WaveGen-120" mainComp="false" Show_id="false" Show_Val="false" Pos="-156,-284" rotation="0" hflip="1" vflip="1" label="WaveGen-120" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Running="false" Wave_Type="Sine" Freq="50 Hz" Phase="0 _º" Steps="100 _Steps" Duty="50 _%" Always_On="false" Bipolar="false" Floating="false" Semi_Ampli="1 V" Mid_Volt="0 V" />
 
 <item itemtype="Node" CircId="Node-25" mainComp="false" Pos="-80,-120" />
 
@@ -140,6 +140,6 @@
 
 <item itemtype="Connector" uid="Connector-318" startpinid="Node-114-2" endpinid="mega32-6-PORTV1" pointList="-132,-108,-152,-108" />
 
-<item itemtype="Connector" uid="Connector-322" startpinid="Voltage Source-119-outPin" endpinid="mega32-6-PORTA0" pointList="-124,-264,-124,-172,-152,-172" />
+<item itemtype="Connector" uid="Connector-323" startpinid="WaveGen-120-outnod" endpinid="mega32-6-PORTA0" pointList="-140,-284,-140,-172,-152,-172" />
 
 </circuit>
